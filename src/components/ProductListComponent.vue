@@ -13,7 +13,7 @@
 								<div class="col-md-3">
 									<img
 										class="img-fluid mx-auto d-block image"
-										:src="item.image"
+										:src="getImageUrl(item.image)"
 									/>
 								</div>
 								<div class="col-md-6">
@@ -92,11 +92,12 @@
 </template>
 
 <script>
-	import { get } from "@/common/api.service";
+	import { BASE_URL } from "@/common/config";
+	import { getAll } from "@/common/product.service";
 
 	export default {
 		// eslint-disable-next-line vue/multi-word-component-names
-		name: "Product",
+		name: "ProductListComponent",
 		components: {},
 		data() {
 			return {
@@ -108,9 +109,12 @@
 		},
 		methods: {
 			getProducts() {
-				get("products").then((response) => {
+				getAll().then((response) => {
 					this.products = response.data;
 				});
+			},
+			getImageUrl(id) {
+				return BASE_URL + "filestore/" + id;
 			},
 		},
 	};
